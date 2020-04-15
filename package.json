@@ -1,0 +1,27 @@
+{
+  "name": "github_5.curso_prof_js",
+  "version": "1.0.0",
+  "description": "Curso Profesional de JavaScript:Mejora tus habilidades en Javascript. Conoce Typescript y cómo puedes ocuparlo para mejorar el control de tus variables. Comprende conceptos avanzados que te permitan plantear mejores soluciones en tu código. Conoce las APIs del DOM y descubre cómo puedes organizar mejor tu código utilizando patrones de diseño.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristianmdk/GitHub_5.Curso_prof_JS.git"
+  },
+  "keywords": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "JS",
+    "tools",
+    "APIs"
+  ],
+  "author": "Cristian Angulo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cristianmdk/GitHub_5.Curso_prof_JS/issues"
+  },
+  "homepage": "https://github.com/cristianmdk/GitHub_5.Curso_prof_JS#readme"
+}
