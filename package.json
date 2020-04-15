@@ -1,0 +1,27 @@
+{
+  "name": "github_5.curso_prof_js",
+  "version": "1.0.0",
+  "description": "Comprende el funcionamiento del DOM. Crea plugins que den más funcionalidades al reproductor de vídeo. Implementa eventos en un objeto acorde a las necesidades de tu proyecto.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristianmdk/GitHub_5.Curso_prof_JS.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "JS",
+    "DOM",
+    "Typescript",
+    "Richard_Kaufman",
+    "APIs"
+  ],
+  "author": "Cristian Angulo <cristianmdk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cristianmdk/GitHub_5.Curso_prof_JS/issues"
+  },
+  "homepage": "https://github.com/cristianmdk/GitHub_5.Curso_prof_JS#readme"
+}
