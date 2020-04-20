@@ -44,14 +44,56 @@
 
         //4.
         //passing a configuration object
+
+        // function MediaPlayer(config){
+        //     this.media = config.element
+        // }
+        // MediaPlayer.prototype.play = function(){
+        //     this.media.play();
+        // };
+
+        // const player = new MediaPlayer({element: video});
+        // button.onclick = () => player.play();
+
+
+        //5.
+        //play and pause
+        // function MediaPlayer(config){
+        //     this.media = config.element
+        // }
+
+        // MediaPlayer.prototype.play = function(){
+        //     this.media.play();
+        // };
+        // MediaPlayer.prototype.pause = function(){
+        //    this.media.pause();
+        // };
+        // MediaPlayer.prototype.toggle_play = function (){
+        //   this.media.paused ? this.play() : this.pause();
+        // }
+
+        // const player = new MediaPlayer({element: video});
+        // button.onclick = () => player.media.paused ? player.play() : player.pause();
+        // //button.onclick = ()=> player.toggle_play();
+
+
+        //6. improved
         function MediaPlayer(config){
             this.media = config.element
         }
+
         MediaPlayer.prototype.play = function(){
             this.media.play();
         };
+        MediaPlayer.prototype.pause = function(){
+           this.media.pause();
+        };
+        MediaPlayer.prototype.toggle_play = function (){
+          this.media.paused ? this.play() : this.pause();
+        }
+
         const player = new MediaPlayer({element: video});
-        button.onclick = () => player.play();
+        button.onclick = ()=> player.toggle_play();
 
       </script>
 </body>
