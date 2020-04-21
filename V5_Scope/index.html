@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/index.css" />
+    <link rel="shortcut icon" href="#" /> 
+</head>
+<body>
+    <p>El Scope o ámbito es lo que define el tiempo de vida de una variable, 
+        en que partes de nuestro código pueden ser usadas.</p>
+
+    <p><b>Global Scope</b>
+        Variables disponibles de forma global se usa la palabra var, son accesibles por todos los scripts que se cargan en la página. Aquí hay mucho riesgo de sobreescritura.
+    </p><p><b>
+        Function Scope</b>
+        Variables declaradas dentro de una función sólo visibles dentro de ella misma (incluyendo los argumentos que se pasan a la función).
+    </p><p><b>
+        Block Scope</b>
+        Variables definidas dentro de un bloque, por ejemplo variables declaradas dentro un loop while o for. Se usa let y const para declarar este tipo de variables.
+    </p><p><b>
+        Module Scope</b>
+        Cuando se denota un script de tipo module con el atributo type="module las variables son limitadas al archivo en el que están declaradas.
+    </p>
+    <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+    <script>
+
+        //Global scope
+        var name = "Cristian";
+        var fName = (name) => console.log("Hello " + name);
+
+        fName("David");        // name_local = David
+        console.log(name);     // name_global = Cristian
+
+            //same:
+            var globalScope_name;
+            var fName_;
+            globalScope_name = "Cristian";
+            fName_= (name) => {
+                var localScope_name;
+                localScope_name = name;
+                console.log("Hello " + localScope_name);
+            }
+
+
+        //Global scope. Example 2
+        var test = "I'm global";
+
+        function testScope() {
+            var test = "I'm local";
+            console.log (test); 
+        }
+        testScope();           // output: I'm local
+        console.log(test);     // output: I'm global
+
+    </script>
+    <script>
+        //Function Scope
+        function printNumbers(){
+            for (var i = 0; i<10; i++){
+                setTimeout(()=>console.log(i), 100); //the loop will finish before the setTimeout executes itself
+            }
+        }
+        printNumbers();
+
+            //extending Function scope
+            function Scope_printNumbers(){
+                for (var j=10; j<20; j++){
+                    function functionScope (n) {
+                        setTimeout(()=>console.log(n), 100);
+                    }
+                    functionScope(j); //we are going into a new context, a new scope (inside of functionScope)
+                }
+            };
+            Scope_printNumbers();
+    </script>
+    <script>
+        //Block Scope
+        function printNumbers2 (){
+            for (let k = 20; k<30; k++){ //let works over the block scope, it creates a block always that let is executed and that eventually it keeps the value of k
+                setTimeout(()=>console.log(k), 100); //the loop will finish before the setTimeout executes itself
+            }
+        }
+        printNumbers2();
+
+        //other example of block scope
+        function foo(){
+            if(true){
+                var fruit1 = 'apple';        //exist in function scope
+                const fruit2 = 'banana';     //exist in block scope
+                let fruit3 = 'strawberry';   //exist in block scope
+            }
+            console.log(fruit1);    //error
+            console.log(fruit2);    //error
+            console.log(fruit3);    //error
+        }
+        //foo(); //error because fruit1,2,and 3 below to the block {} of if not to foo()
+    </script>
+
+
+
+    <main class="container">
+        <video class="movie">
+          <source src="./assets/BigBuckBunny.mp4" />
+        </video>
+
+        <button>Play/Pause</button>
+      </main>
+      <script type="module" src="./assets/index.js">
+        //Module Scope
+      </script>
+</body>
+</html>
