@@ -6,7 +6,7 @@
 
 
 console.log('IIFE');
-// IIFE : immediately invocate function expression 
+// IIFE : immediately invocate function expression
 (function() {
     let color = 'green'; //it wont be global
 
