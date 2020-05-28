@@ -19,3 +19,4 @@ if (this.media.paused) {
 };
 
 export default MediaPlayer;
+export const MyVar = "just for testing";
