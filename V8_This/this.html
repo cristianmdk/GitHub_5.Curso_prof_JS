@@ -57,13 +57,13 @@
 
         // "this" in the scope of a class. Classes don't really exist in JS
         function Person (name){
-            this.name = name; //constructor
+            this.name = name; //constructor //this es sobre la instancia, no sobre el objeto prototipal
         }
         Person.prototype.greetings = function() {
             console.log(`My name is ${this.name}`);
         };
-        const angela = new Person('Angela');
-        angela.greetings();
+        const angelaObj = new Person('Angela'); //this means angelaObj which is running greetings()
+        angelaObj.greetings();
 
     </script>
 </body>
