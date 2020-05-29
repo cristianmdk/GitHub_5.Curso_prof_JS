@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p><em>Abre la consola</em></p>
+
+    <h1>
+        <code>this</code> se refiere a un objeto. Ese objeto es el que actualmente
+        está ejecutando un pedazo de código.
+    </h1>
+    <h1>
+        call, apply and bind will stablish the context of a function
+    </h1>
+
+    <ul>
+      <li><button class="call-to-action">Aprender</button></li>
+      <li><button class="call-to-action">Aprender Más</button></li>
+      <li><button class="call-to-action">¡Nunca parar de Aprender!</button></li>
+    </ul>
+    <script>
+        // Establece `this` usando `call`
+            //method for object. There is not any object yet, but however we are using "this"
+        function greetings_method (){ //this function doesnt have input parameters because it will be a method for an object
+            console.log(`Hi, my name is ${this.name} ${this.surname}`)
+        }
+            //function
+        function greetings_function (name, surname){
+            console.log(`Hi, my name is ${name} ${surname}`);
+            console.log(this);
+        }
+
+        const Cris = {name: "Cristian", surname:"Angulo"}
+
+            //all function has call, apply and bind
+        greetings_method.call(Cris); //call works to give the object to a function, this object will be the "this" of that function
+        greetings_function.call(Cris);
+        greetings_function.call("Cristian" ,"Angulo"); //using call, the first value of the function will be "this" for that the function prints Cristian as object and Angulo as surname
+        greetings_function.call("Cristian" ,"Angulo", "Lopez");
+
+        function walking (meters, direction){
+            console.log(`${this.name} has walked ${meters} meters to the ${direction}`)
+        }
+
+        // Establece `this` usando `call` y pasar argumentos a la función
+        walking.call(Cris, 200, "north"); //with "call" I need to give the object first which will be "this" inside the function
+    </script>
+
+    <script>
+        console.log("\n-------------------------\n");
+        // Establece `this` usando `apply` y pasar argumentos a la función
+        // apply is used in the same way that call.
+        const Choice = {name:"Chanyaporn", surname: "Kiatyanyong"};
+        greetings_method.apply(Choice)
+
+        // the difference is when i want to pass more parameters to the function I need to do it through an array
+        walking.apply(Choice, [500, "south"]);
+
+        //it is really useful when I need to pass a list
+        const ChoiceList = [1000, "east"];
+        walking.apply(Choice, ChoiceList);
+    </script>
+
+    <script>
+        console.log("\n-------------------------\n");
+        // Establecer `this` en una nueva función usando `bind`
+        // "bind" will not call the function automatically, it will build a NEW function
+        // the NEW will already have the "this" inside
+        const Mathew = {name: "Mateo", surname:"Rodriguez"};
+        greetings_method.bind(Mathew); //if we check the console we will see that the message is not being shown
+        const MathewGreetings =  greetings_method.bind(Mathew);
+        MathewGreetings(); // now it is working
+
+        //there are different ways to pass the parameters to a bind function
+        const MathewWalk1 = walking.bind(Mathew);
+        MathewWalk1(10, "west"); //totally at the call
+
+        const MathewWalk2 = walking.bind(Mathew, 20, "east");
+        MathewWalk2(); // totally at the declaration of the function
+
+        const MathewWalk3 = walking.bind(Mathew, 30);
+        MathewWalk3("north"); //partial. It is called Currying
+    </script>
+
+    <script>
+        console.log("\n-------------------------\n");
+        // Cuándo es útil usar uno de estos métodos
+        const buttons = document.getElementsByClassName("call-to-action") 
+        console.log(buttons); //it will return a NodeList of button objects, it looks like a list, but it is not.
+
+        // buttons.forEach( //it doesn't work because is a NodeList
+        //     button => {
+        //         button.onclick = ()=> alert("You clicked the button!")
+        //     }
+        // )
+
+        Array.prototype.forEach.call(buttons,  EachButton => {
+            EachButton.onclick = ()=> alert("You clicked the button!")
+        });
+    </script>
+</body>
+</html>
