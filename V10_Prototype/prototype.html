@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <title>Prototype</title>
+  </head>
+
+  <body>
+    <p><em>Abre la consola</em></p>
+
+    <script>
+      arreglo = [2,4,6,8]
+
+      //all the methods of an array. these methods live in the prototype, they don't live in the object
+      console.log("\n1.Prototype of a var (Array):");
+      console.log(arreglo.__proto__)
+
+
+
+      //every prototype has a prototype
+      console.log("\n2.Prototype of a object:");
+      console.log(arreglo.__proto__.__proto__);
+
+      cadena = "Chanyaporn";
+      console.log("\n3.The prototypes of the object are equal, but the prototype of two vars they don't have to be equal:")
+      console.log(arreglo.__proto__.__proto__ === cadena.__proto__.__proto__);
+      console.log(arreglo.__proto__ === cadena.__proto__);
+
+
+
+      //the last prototype must be null
+      console.log("\n4.The last prototype of a object must be null");
+      console.log(arreglo.__proto__.__proto__.__proto__);
+
+
+
+      //prototype of a object
+      console.log("\n5.The var arreglo is Array type:");
+      console.log(Array.isArray(arreglo));
+
+
+
+      //the prototype of the type Array is equal to the prototype of a var type Array
+      console.log("\n6.Original Prototype: The prototype of arreglo is to the prototype of Array:");
+      console.log(arreglo.__proto__=== Array.prototype);
+
+
+
+      //Array is a function, it is not an object and its prototype is not __proto__
+      console.log("\n7.Array is a function:");
+      console.log(typeof(Array));
+      function aNormalFunction (){
+        console.log("this is a normal function")
+      };
+      console.log(aNormalFunction.__proto__=== Array.__proto__);
+
+
+
+      //the prototype of a var comes from the prototype of its class. But the prototype of the class is storage in .prototype, not in .__proto__
+      console.log("\n8.The second prototype .prototype only exists in functions (Its first prototype is .__proto__)")
+      console.log(arreglo.__proto__=== Array.__proto__); //false
+      console.log(arreglo.__proto__=== Array.prototype); //true
+
+
+
+      //to add a method to a prototype
+      console.log("\n9.Add a method:");
+      arreglo.__proto__.newMethod1 = function (){ //this is not the right way to do it
+        return this[0]; //return the first element
+      };
+      console.log(arreglo.newMethod1());
+      //the right way to do it is by adding the method to the class 
+      Array.prototype.newMethod2 = function(){
+        return this[1];
+      };
+      console.log(arreglo.newMethod2()); // it was not necessary to add to the var prototype
+
+
+
+      //our own class (in JS the classes are functions)
+      console.log("\n10.Prototype inheritance:");
+      function Animal(){
+        this.move1 = function(){
+          console.log("function move1");
+        }
+      };
+      Animal.prototype.move2 = function(){
+        console.log("function move2");
+      }
+
+      function Dog () {
+        Dog.prototype.move3 = function (){
+          console.log("function move3");
+      }};
+      myDog = new Dog(); //in this point myDog cannot use move1 neither move2
+      Dog.prototype.__proto__ = Animal.prototype;
+      //myDog.move1(); //i dont understand why there is an error
+      myDog.move2();
+      myDog.move3();
+
+      class Cat extends Animal {};
+      myCat = new Cat();
+      myCat.move1();
+      myCat.move2();
+    </script>
+
+
+
+
+    <script>
+      console.log("\n\n\n\n\n\n\n\n\n\n\n\n");
+      //object
+      const Cristian = {
+        name: "Christian"
+      }
+      Cristian.greetings = function (){
+        console.log("\n11. naming Object by Object = Hi, Im ", this.name)
+      }
+      Cristian.greetings()
+
+      const Mateo = {
+        name: "Mathew"
+      }
+      Mateo.greetings = function (){
+        console.log("\n11. naming Object by Object = Hi, Im ", this.name)
+      }
+      Mateo.greetings()
+
+
+
+      //it is not efficient because the objects are similar and they have the same methods
+      //class = function :
+      function person (name){
+        const person = {
+          name: name
+        }
+        person.greetings = function (){
+          console.log("\n12. Class = Hi, Im ", this.name)
+        }
+        return person
+      }
+
+      const Choice = person("Chanyaporn");
+      Choice.greetings()
+
+
+
+      //it is still inefficient because the function greeting is call for every object
+      const humanMethods = {
+        greetings: function (){
+          console.log("\n13.this method adds a constructor to keep all the methods")
+          console.log("13. constructor = Hi, Im ", this.name)
+        }
+      }
+
+      function human (name){
+        const person = {
+          name: name
+        }
+        person.greetings = humanMethods.greetings;
+        return person
+      }
+
+      const Chanya = human("Kiatyanyong")
+      Chanya.greetings()
+
+
+
+      //copying methods to the __proto__ by using Object.create
+      function being (name){
+        const person = Object.create(humanMethods); //the base of this new object will be humanMethods and all these methods will storage in __proto__
+        person.name = name;
+        return person;
+      }
+
+      const David = being("David");
+      David.greetings()
+
+
+
+      //.prototype
+      function mortal (name){
+        const person = Object.create(mortal.prototype); 
+        person.name = name;
+        return person;
+      }
+      mortal.prototype.greetings = function (){
+        console.log("\n14. .prototype with Object.create() = Hi, Im ", this.name)
+      }
+
+      const Angulo = mortal ("Angulo");
+      Angulo.greetings();
+
+
+
+      //new. It is not necessaty to use Object.create() because "new" will create the object this, and it will link it with .prototype
+      function soul (name){
+        this.name = name;
+      }
+      soul.prototype.greetings = function (){
+        console.log("\n15. 'new' will create 'this' = Hi, Im ", this.name)
+      }
+      const Lopez = new soul("Lopez")
+      Lopez.greetings();
+    </script>
+  </body>
+</html>
