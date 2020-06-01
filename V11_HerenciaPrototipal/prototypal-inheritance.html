@@ -1,0 +1,186 @@
+<html>
+  <head>
+    <title>Herencia Prototipal</title>
+  </head>
+
+  <body>
+    <p><em>Abre la consola</em></p>
+
+    <h1>
+      <code>SomeObject.prototype</code> es un objeto donde definimos el
+      prototipo de las instancias de <code>SomeObject</code>. Es decir, las
+      instancias de <code>SomeObject</code> van a "heredar" de
+      <code>SomeObject.prototype</code>.
+      <br />
+      <br />
+      <code>SomeObject.[[Prototype]]</code> es el prototipo de
+      <code>SomeObject</code>. Es decir, <code>SomeObject</code> "hereda" de
+      <code>SomeObject.prototype</code>.
+      <br />
+      <br />
+    </h1>
+
+
+    <l1>
+      <code>Envio dinamico o delegacion:</code>
+      Si una propiedad no se encuentra en el objecto mismo, hay un intento de buscarlo en
+      el .prototype, sino se encuentra se busca en el prototype del prototipo (.__proto__.__proto__), etc 
+      hasta que se agotan todas las cadenas de prototipos
+    </l1>
+    <script>
+      function Hero(name) {
+        this.name = name;
+      }
+
+      Hero.prototype.saludar = function() {
+        console.log(`Hola, soy ${this.name}.`);
+      };
+      console.log(typeof(Hero));
+      console.log(typeof(Hero.prototype));
+      console.log(typeof(Hero.__proto__));
+      console.log(Hero.prototype     === Hero.__proto__); 
+      console.log(Object.__proto__   === Function.prototype);
+      console.log(Function.__proto__ === Function.prototype);
+      console.log(Hero.__proto__     === Function.prototype);
+      console.log(Hero.__proto__     === Object.__proto__);
+
+      /*
+      VAR [function Animal, name, ..., prototype, __proto__]
+      FUNCTION [..., prototype, __proto__]
+      OBJECT [..., __proto__]
+
+      VAR.prototype --> its own function
+      VAR.__proto__ --> FUNCTION.prototype
+                    --> FUNCTION.__proto__    because FUNCTION.prototype <--> FUNCTION.__proto__
+                    --> OBJECT.__proto__
+      FUNCTION.prototype  --> FUNCTION.__proto__
+                          --> OBJECT.__proto__
+      OBJECT.__proto__ --> null
+      */
+
+      var Animal = {
+        type: "Dog",
+        color: "white",
+        age: 2,
+        bark: function (){
+          console.log("wua wua");
+        }
+      };
+
+      Animal.__proto__.bark = function (){
+        console.log("miua miua")
+      }
+      Animal.bark(); //it will be wua wua
+
+      var myObjectNumber = {
+        getNumber: function (){
+          return this.number
+        }
+      };
+
+      var a = {
+        number: 29,
+        __proto__: myObjectNumber
+      }
+      console.log(a.getNumber());
+    </script>
+
+<script>
+  arreglo = [2,4,6,8]
+
+  //all the methods of an array. these methods live in the prototype, they don't live in the object
+  console.log("\n1.Prototype of a var (Array):");
+  console.log(arreglo.__proto__)
+
+
+
+  //every prototype has a prototype
+  console.log("\n2.Prototype of a object:");
+  console.log(arreglo.__proto__.__proto__);
+
+  cadena = "Chanyaporn";
+  console.log("\n3.The prototypes of the object are equal, but the prototype of two vars they don't have to be equal:")
+  console.log(arreglo.__proto__.__proto__ === cadena.__proto__.__proto__);
+  console.log(arreglo.__proto__ === cadena.__proto__);
+
+
+
+  //the last prototype must be null
+  console.log("\n4.The last prototype of a object must be null");
+  console.log(arreglo.__proto__.__proto__.__proto__);
+
+
+
+  //prototype of a object
+  console.log("\n5.The var arreglo is Array type:");
+  console.log(Array.isArray(arreglo));
+
+
+
+  //the prototype of the type Array is equal to the prototype of a var type Array
+  console.log("\n6.Original Prototype: The prototype of arreglo is to the prototype of Array:");
+  console.log(arreglo.__proto__=== Array.prototype);
+
+
+
+  //Array is a function, it is not an object and its prototype is not __proto__
+  console.log("\n7.Array is a function:");
+  console.log(typeof(Array));
+  function aNormalFunction (){
+    console.log("this is a normal function")
+  };
+  console.log(aNormalFunction.__proto__=== Array.__proto__);
+
+
+
+  //the prototype of a var comes from the prototype of its class. But the prototype of the class is storage in .prototype, not in .__proto__
+  console.log("\n8.The second prototype .prototype only exists in functions (Its first prototype is .__proto__)")
+  console.log(arreglo.__proto__=== Array.__proto__); //false
+  console.log(arreglo.__proto__=== Array.prototype); //true
+
+
+
+  //to add a method to a prototype
+  console.log("\n9.Add a method:");
+  arreglo.__proto__.newMethod1 = function (){ //this is not the right way to do it
+    return this[0]; //return the first element
+  };
+  console.log(arreglo.newMethod1());
+  //the right way to do it is by adding the method to the class 
+  Array.prototype.newMethod2 = function(){
+    return this[1];
+  };
+  console.log(arreglo.newMethod2()); // it was not necessary to add to the var prototype
+
+
+
+  //our own class (in JS the classes are functions)
+  console.log("\n10.Prototype inheritance:");
+  function Animal(){
+    this.move1 = function(){
+      console.log("function move1");
+    }
+  };
+  Animal.prototype.move2 = function(){
+    console.log("function move2");
+  }
+
+  function Dog () {
+    Dog.prototype.move3 = function (){
+      console.log("function move3");
+  }};
+  myDog = new Dog(); //in this point myDog cannot use move1 neither move2
+  Dog.prototype.__proto__ = Animal.prototype;
+  //myDog.move1(); //i dont understand why there is an error
+  myDog.move2();
+  myDog.move3();
+
+  class Cat extends Animal {};
+  myCat = new Cat();
+  myCat.move1();
+  myCat.move2();
+</script>
+
+
+  </body>
+</html>
