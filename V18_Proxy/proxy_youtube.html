@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>Proxy</title>
+    </head>
+
+    <body>
+        <a href="https://www.youtube.com/watch?v=0o4-TvTkGtk">__Youtube__</a>
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Proxy">__PROXY__</a>
+        <p><em>Abre la consola</em></p>
+
+        <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
+        <script>
+            var employ = {
+                name: "",
+                surname: "",
+                password: "abc123"
+            }
+
+            employ.name = "Cristian";
+            var handler = {};
+            var pEmploy = new Proxy (employ, handler);
+
+            pEmploy.name = "David";
+            pEmploy.id = 1234; //someone can add Malware to protect this
+            console.log(employ)
+
+
+
+
+            var employ_2 = {
+                name: "",
+                surname: "",
+                password: "abc123"
+            }
+
+            function validate (prop, value){
+                const keys = Object.keys(employ_2);
+                const proInvalidate = keys.indexOf(prop) === -1;
+
+                if (proInvalidate) {
+                    console.log("invalid property value");
+                    return false;
+                }
+                if ((prop === "name" || prop === "name") && /\d/.test(value) ){
+                    ///\d/.test(value) = it is a regular expression to validate if the string has digits, the regular expression has the method test
+                    console.log(`${prop} ${value} is invalid for ${value}`);
+                    return false;
+                }
+                return true;
+            }
+
+            var handler_2 = {
+                set(object, property, value){ // to validate data of an object
+                    if (validate(property, value)){
+                        object[property] = value
+                    }
+                },
+                get(object, property){ //to protect the data
+                    if (property === "password"){
+                        return '*'.repeat(object[property].length)
+                    }
+                    return object[property];
+                }
+            };
+
+            var pEmploy_2  = new Proxy (employ_2, handler_2);
+            pEmploy_2.name = "Oscar1232";
+            pEmploy_2.ID = 34;
+            pEmploy_2.name = "Oscar";
+            console.log(pEmploy_2)
+            console.log(pEmploy_2.name)
+            console.log(pEmploy_2.password)
+            pEmploy_2.password = "cristianmdk123";
+            console.log(pEmploy_2.password)
+            console.log(employ_2.password)
+        </script>
+    </body>
+</html>

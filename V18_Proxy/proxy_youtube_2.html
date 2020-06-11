@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>Proxy</title>
+    </head>
+
+    <body>
+        <a href="https://www.youtube.com/watch?v=gZ4MCb2nlfQ">__Youtube2__</a>
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Proxy">__PROXY__</a>
+        <p><em>Abre la consola</em></p>
+
+        <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
+        <script>
+            const bears = {
+                grizzly: true,
+            }
+
+            function growl (obj) {
+                return (Object.entries(obj))[0][1]; //return a object
+            }
+
+            const kindBears ={
+                grizzly: true,
+                polar: true,
+                brown: true,
+                black: true,
+                panda: true,
+            }
+
+            let grizzlyCount = 0
+
+            const handler = {
+                get: function (target, property){ //to use a property of the object
+                    if (property === 'grizzly') grizzlyCount++
+                    if (!(property in target)){
+                        return property.split('_').map(function(part){
+                            return part;
+                        })
+                    }
+                    return target[property] //if the property is find so I will return that property
+                },
+                set: function(target, property, value){
+                    if (['grizzly', 'brown', 'polar'].indexOf(property) === -1){ //it is not any of these
+                        console.log(`${property} IS TOTALLY NOT A BEAR!`);
+                        return;
+                    }
+                    target[property] = value
+                },
+                deleteProperty: function(target, property){
+                    console.log(`YOU HAVE DELETED ${property}`)
+                    delete target[property];
+                },
+                apply: function (target, thisArg, argumentsList) {
+                    //console.log(`Calculate sum: ${argumentsList}`);
+                    return Object.keys(target(argumentsList)); //return a list
+                }
+            }
+
+            //1. A trap to validate the properties (get)
+            const proxyBears = new Proxy(bears, handler)
+            proxyBears.grizzly;
+            proxyBears.grizzly;
+            proxyBears.grizzly;
+            proxyBears.grizzly2;
+            console.log(grizzlyCount)
+            //1.2
+            console.log(proxyBears.grizzly_polar_polar_brown)
+
+            //2. A trap for setting property values: validation use (set)
+            console.log(proxyBears.grizzly)
+            proxyBears.grizzly = false;
+            console.log(proxyBears.grizzly)
+            proxyBears.grizzly = true;
+            console.log(proxyBears.grizzly)
+            proxyBears.coconut = true;
+            proxyBears.polar = true;
+            console.log(proxyBears.polar)
+
+            //3. A trap for the delete operator. (deleteProperty)
+            delete proxyBears.polar;
+            console.log(proxyBears.polar)
+
+            //4. trap for a function call. (apply) modify a function
+            const proxyGrowl = new Proxy(growl, handler)
+            console.log(proxyGrowl(kindBears))
+
+        </script>
+    </body>
+</html>
