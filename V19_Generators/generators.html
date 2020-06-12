@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>Generators</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script>
+      // Los generadores son funciones de las que se puede salir y volver a entrar.
+      // Su contexto (asociación de variables) será conservado entre las reentradas.
+      // Cada vez que llamamos next, la ejecución del generador va a continuar hasta el proximo yield
+
+
+      //Generators are used to improve the memory use
+      //GENERATORS: SPECIAL FUNCTION WHICH EXECUTION WE CAN START IT, STOP IT, AND CONTINUE IT.
+      function* simpleGenerator (){ //this function is not executable, we need to create a cons to call this function
+        console.log("GENERATOR STARTS");
+        yield 1;
+        yield 3;
+        yield 5;
+        console.log("GENERATOR ENDS");
+        yield 7;
+      }
+      const gen = simpleGenerator();
+      console.log(gen.next()); //.next() is the value of the generator. Because it has not finished so it returns done:false
+      console.log(gen.next()); //another var it returns is value and this is equal to the value after the yield. value:3
+      console.log(gen.next()); //it returns done=true because it already finished
+    </script>
+
+    <script>
+      function* idMaker (){
+        let id = 1;
+        while(true){ //it will return ids infinitely
+          yield id;
+          id = id+1;
+        }
+      }
+      const genId = idMaker();
+      console.log(genId.next());
+
+      function* idMakerReset (){
+        let id = 1;
+        let reset;
+        while(true){ //it will return ids infinitely
+          reset = yield id;
+          if (reset){
+            id = 0;
+          }else {
+            id = id+1;
+          }
+        }
+      }
+      const genIdReset = idMakerReset();
+      genIdReset.next();
+      genIdReset.next();
+      console.log(genIdReset.next(true)); //it resets the counter
+    </script>
+
+    <script>
+      function* fibonacci (){
+        let a = 1;
+        let b = 1;
+        while (true){
+          const nextNumber = a+b;
+          a = b;
+          b = nextNumber;
+          yield nextNumber;
+        }
+      }
+      const genFibonacci = fibonacci()
+      console.log(genFibonacci.next())
+      genFibonacci.next()
+      genFibonacci.next()
+      console.log(genFibonacci.next())
+    </script>
+  </body>
+</html>
