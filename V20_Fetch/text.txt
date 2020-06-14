@@ -1,0 +1,35 @@
+1. Crear llaves publicas:
+1.1. GitHub.com:: Settings --> SSH and GPG keys --> New SSH key
+1.2. Terminal:: cd .ssh --> cat id_rsa.pub
+1.3. Terminal:: copy the answer of the terminal. 
+1.4. HitHub:: Title, key: page the answer of the terminal. --> Add SHH key
+
+2. Crear un repositorio.
+2.1. HitHub.com:: New Repository
+2.2. HitHub:: name, description, Public, Initialize with a README file, java, MIT License --> Create repository
+
+3. Synchronize repository to PC
+3.1. Terminal:: go to the file where I want to copy the repository
+3.1.1 Terminal:: cd Documents/JavaScript/......
+3.2. GitHub:: Clone or download --> Use SSH --> copy "git url"
+3.3. Terminal:: git clone  "page link"
+
+
+4. Work in the repository from PC
+4.1. 
+
+
+
+PROBLEM:: git pull
+error: You have not concluded your merge (MERGE_HEAD exists).
+1. git merge --abort
+1. git rebase --abort
+2. git reset --merge
+3. git reset --hard origin/master
+3. git pull
+
+
+Rebase
+Merge 
+git reset --hard HEAD~1 
+Git push --force

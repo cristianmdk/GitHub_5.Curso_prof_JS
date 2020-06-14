@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELLO, WORLD!</title>
+</head>
+<body>
+    <div>
+        <button id="getText" onclick="getF()">GET TEXT</button>
+        <button id="getText2" onclick="getAnswerFetch()">GET ANSWER OF FETCH IN CONSOLE</button>
+        <button id="getUser" onclick="getApi()">GET USER</button>
+        <div id="textContent">
+        </div>
+    </div>
+    <script>
+        //desde el script voy a acceder al boton y voy a capturar todo lo que hay dentro de text.txt
+        //es como si estuviera abriendo el archivo y lo estuviera pegando en <p></p>, pero esta haciendo con fetch
+        //const urlPicture = 'https://images.pexels.com/photos/974470/nature-stars-milky-way-galaxy-974470.jpeg?q=100';
+        const urlText = 'text.txt';
+        const urlApi = 'https://randomuser.me/api/';
+        var pText = document.getElementById('textContent');
+        //var pText = document.querySelector('#textContent') // otra forma
+
+        function getF(){
+            //pText.innerHTML = `<p>Este es mi texto</p>`;
+            fetch(urlText)
+            .then(data=> data.text()) //es una promesa de que traere algo (urlText) pero tu me prometes que me vas a traer una respuesta (.then())
+            .then(data=> {
+                console.log(data);
+                pText.innerHTML = `${data}`;
+            })
+        }
+
+        function getAnswerFetch(){
+            fetch(urlText)
+            .then(answer => console.log(answer));
+        }
+
+        function getApi(){
+            fetch (urlApi) //toma el metodo get
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.results[0].email)
+                pText.innerHTML = `
+                    <img id="pictureContent" src='${data.results[0].picture.large}' width='100px'>
+                    <p>Name: ${data.results[0].name.last}</p>
+                `;
+            })
+        }
+    </script>
+
+    <script type="module" src="./assets/index.js">
+        // >> python3 -m http.server 8080
+        //http://0.0.0.0:8080/
+    </script>
+</body>
+</html>
