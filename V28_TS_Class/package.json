@@ -1,0 +1,37 @@
+{
+  "name": "github_5.curso_prof_js",
+  "version": "1.0.0",
+  "description": "Curso de JS",
+  "main": "./index.js",
+  "editor.tabSize": 4,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristianmdk/GitHub_5.Curso_prof_JS.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "JS",
+    "DOM",
+    "Typescript",
+    "Richard_Kaufman",
+    "APIs"
+  ],
+  "author": "Cristian Angulo <cristianmdk@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/cristianmdk/GitHub_5.Curso_prof_JS/issues"
+  },
+  "homepage": "https://github.com/cristianmdk/GitHub_5.Curso_prof_JS#readme",
+  "scripts": {
+    "start": "parcel index.html ejercicios/**/*.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.9.5"
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
+  "dependencies": {}
+}
